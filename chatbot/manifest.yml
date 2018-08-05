@@ -1,0 +1,9 @@
+applications:
+  - path: .
+    name: DonandoAndo
+    environment_json: {}
+    memory: 256M
+    instances: 1
+    disk_quota: 1024M
+    services:
+      - Watson Assistant-g4
