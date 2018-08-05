@@ -74,12 +74,14 @@ class Inventario(models.Model):
         ('O', 'O'),
     )
 	banco = models.ForeignKey(Banco, on_delete=models.CASCADE)
-	rh = models.CharField(max_length=3, choices=TIPOS_RH, unique=True)
-	grupo_sanguineo = models.CharField(max_length=9, choices=GRUPOS_SANGUINEOS, unique=True)
+	rh = models.CharField(max_length=3, choices=TIPOS_RH)
+	grupo_sanguineo = models.CharField(max_length=9, choices=GRUPOS_SANGUINEOS)
 	cantidad_sangre = models.FloatField(default=0.0)
+	class Meta:
+		unique_together = ('rh', 'grupo_sanguineo',)
 	"""docstring for Inventario"""
 	def __str__(self):
-		return self.banco + ' ' + self.rh + self.grupo_sanguineo
+		return self.banco.nombre + ' - ' + self.rh + ' ' + self.grupo_sanguineo
 
 
 class Donacion(models.Model):

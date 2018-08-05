@@ -1,0 +1,63 @@
+{% extends 'adminlte/base.html' %}{% load i18n static %}
+
+{% block title %}Bancos de Sangre{% endblock %}
+{% block content %}
+	<!-- /.box-header -->
+	<div class="box-body">
+		{% block titulo_lista %}
+		<div class="text-center">
+			<h1 class="text-center">{% trans "Inventario Bancos de Sangre" %}</h1>
+			<hr>
+		</div>
+		{% endblock %}
+	  <div class="table-responsive">
+	    <table class="table no-margin">
+	      <thead>
+	      <tr>
+	        <!--th>ID</th-->
+	        <th>Nombre</th>
+	        <th>Categoria</th>
+	        <th>Ciudad</th>
+	        <th>Localidad</th>
+	        <th>Código Nacional de Sangre</th>
+	        <th>Ubicación</th>
+	        <th>Dirección</th>
+	        <th>Tipo de Sangre</th>
+	        <th>Cantidad</th>
+	        <th>Estado</th>
+	      </tr>
+	      </thead>
+	      <tbody>
+	      {% for inv in lista_inventarios %}
+	        <tr data-sid="{{ inv.id }}" data-id="{{ inv.id }}">
+	        <td>{{ inv.banco.nombre }}</td>
+	        <td>{{ inv.banco.categoria }}</td>
+	        <td>{{ inv.banco.ciudad.nombre }}</td>
+	        <td>{{ inv.banco.localidad }}</td>
+	        <td>{{ inv.banco.codigo_nacional_sangre }}</td>
+	        <td>
+	        	<a href="https://www.google.com/maps/@{{ inv.banco.lat }},{{ inv.banco.lon }},17z">Google Maps</a>
+	        </td>
+	        <td>{{ inv.banco.direccion }}</td>
+	        <td><b>{{ inv.rh }} {{ inv.grupo_sanguineo }}</b></td>
+	        <td><b>{{ inv.cantidad_sangre }} ml</b></td>
+	        <td>
+	         {% if inv.cantidad_sangre <= 5000 %}
+	          <span class="label label-danger order-status">Crítico</span>
+	          {% elif inv.cantidad_sangre > 5000 and inv.cantidad_sangre <= 10000 %}
+	          <span class="label label-warning order-status">Estable</span>
+	          {% elif inv.cantidad_sangre > 10000 %}
+	          <span class="label label-success order-status">Normal</span>
+	          {% endif %}
+	        </td>
+	      </tr>
+	      {% endfor %}
+
+
+	      </tbody>
+	    </table>
+	  </div>
+	  <!-- /.table-responsive -->
+	</div>
+	<!-- /.box-body -->
+{% endblock %}
