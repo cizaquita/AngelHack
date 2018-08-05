@@ -1,0 +1,55 @@
+{% extends 'adminlte/base.html' %}{% load i18n static %}
+
+{% block title %}Registro Ciudadanos{% endblock %}
+{% block content %}
+	<!-- /.box-header -->
+	<div class="box-body">
+		{% block titulo_lista %}
+		<div class="text-center">
+			<h1 class="text-center">{% trans "Ciudadanos" %}</h1>
+			<a href="/admin/restapi/ciudadano/add/" class="btn btn-primary btn-lg active" role="button">{% trans 'Crear Ciudadano' %}</a>
+			<hr>
+		</div>
+		{% endblock %}
+	  <div class="table-responsive">
+	    <table class="table no-margin">
+	      <thead>
+	      <tr>
+	        <!--th>ID</th-->
+	        <th>Nombres</th>
+	        <th>Tipo de Identificacion</th>
+	        <th>Identificacion</th>
+	        <th>Estado</th>
+	        <th>Editar</th>
+	        <th>Eliminar</th>
+	      </tr>
+	      </thead>
+	      <tbody>
+	      {% for ciudadano in lista_ciudadanos %}
+	        <tr data-sid="{{ ciudadano.id }}" data-id="{{ ciudadano.id }}" data-date="{{ ciudadano.fecha_registro.isoformat }}">
+
+	        <!--td><a href="/detalle/{{ ciudadano.id }}">{{ ciudadano.id }}</a></td-->
+	        <td>{{ ciudadano.nombres }} {{ ciudadano.apellidos }}</td>
+	        <td>  {{ ciudadano.tipo_identificacion.nombre }}</td>
+	        <td>{{ ciudadano.identificacion }}</td>
+	        <td>
+	         {% if ciudadano.requerido == True %}
+	          <span class="label label-danger order-status">Requerido</span>
+	          {% elif ciudadano.requerido == False %}
+	          <span class="label label-success order-status">No Requerido</span>
+	          {% endif %}
+	        </td>
+	        <td><a href="/admin/restapi/ciudadano/{{ ciudadano.id }}"><i class="fa fa-pencil-square-o"></i></a></td>
+	        <td><a href="/admin/restapi/ciudadano/{{ ciudadano.id }}/delete/"><i class="fa fa-trash"></i></a></td>
+	      </tr>
+	      {% endfor %}
+
+
+	      </tbody>
+	    </table>
+	  </div>
+	  <!-- /.table-responsive -->
+	</div>
+	<a href="/generar_pdf/?requerido={{requerido}}" target="_blank"><i class="fa fa-circle-o text-red"></i> <span>Generar Reporte</span></a>
+	<!-- /.box-body -->
+{% endblock %}
