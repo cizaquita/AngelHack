@@ -1,5 +1,7 @@
 # AngelHack
 
+Proyecto que integra un chatbot utilizando watson de IBM.
+
 ¡Salva una vida!
 Con una sola donación puedes salvar tres vidas. Visita ya tu banco de sangre más cercano
 
